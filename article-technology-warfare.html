@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Role of Technology in Modern Warfare — Jade</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f5f2;
+      --surface: #ffffff;
+      --ink: #1a1a18;
+      --ink-soft: #6b6b67;
+      --accent: #2d6a4f;
+      --accent-light: #d8f3dc;
+      --border: #e2e0db;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 5vw;
+      background: rgba(247,245,242,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-back {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink-soft);
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--accent); }
+
+    /* HERO */
+    .article-hero {
+      padding: 9rem 5vw 4rem;
+      max-width: 780px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .article-category {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 0.3rem 0.7rem;
+      border-radius: 2px;
+      display: inline-block;
+      margin-bottom: 1.4rem;
+    }
+    .article-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+    }
+    .article-meta {
+      display: flex; gap: 2rem; flex-wrap: wrap;
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+    /* BODY */
+    .article-body {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 3rem 5vw 6rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+    .article-body p {
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+      margin-bottom: 1.4rem;
+      line-height: 1.8;
+    }
+    .article-body h2 {
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      color: var(--ink);
+      margin: 2.8rem 0 1rem;
+      line-height: 1.2;
+    }
+    .article-body strong { color: var(--ink); font-weight: 500; }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      margin: 2.5rem 0;
+      padding: 1.5rem 2rem;
+      border-left: 3px solid var(--accent);
+      background: var(--surface);
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    /* WORKS CITED */
+    .works-cited {
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .works-cited h2 {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .works-cited ol {
+      padding-left: 1.2rem;
+    }
+    .works-cited li {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+    }
+    .works-cited a { color: var(--accent); }
+
+    /* BACK BUTTON */
+    .back-section {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 5vw 5rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.8rem;
+      border-radius: 2px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.22s;
+      background: var(--ink); color: var(--bg);
+    }
+    .btn:hover { background: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 1.5rem 5vw;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p { font-size: 0.78rem; color: #6b6b67; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Jade.</a>
+  <a href="index.html#blog" class="nav-back">← Back to Blog</a>
+</nav>
+
+<div class="article-hero">
+  <span class="article-category">Analytical</span>
+  <h1 class="article-title">The Role of Technology in Modern Warfare</h1>
+  <div class="article-meta">
+    <span>By Hyunchae Jung</span>
+    <span>March 2026</span>
+    <span>5 min read</span>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <p>As the Iran-US war enters its fourth week since the initial strikes on February 28, the United States Department of Defense has deployed a range of advanced technologies in the Middle East. From artificial intelligence that processes data in microseconds to autonomous drones that strike without a pilot, today's modern warfare looks different from the traditional mode. While proponents argue these tools reduce risk to soldiers, critics warn that the autonomy of these systems highlights the distinction between human judgment and machine decisions. The question is whether humanity is equipped to define the moral limits of the new technology on the battlefield.</p>
+
+  <h2>Appearance of AI in Wars</h2>
+
+  <p>According to U.S. Central Command, artificial intelligence (AI) technology has helped the US during Operation Epic Fury, a campaign aimed at eliminating the Iranian nuclear threat and its war power. The head of Central Command, Brad Cooper, acknowledged that "our warfighters are leveraging a variety of advanced AI tools." He explained that "these systems help [the military] sift through vast amounts of data in seconds" (US Central Command).</p>
+
+  <p>Furthermore, the Pentagon has confirmed its usage of Anthropic's Claude AI, which also played a significant role during the U.S. operation to capture Nicolás Maduro in Venezuela by helping the army find the optimal strategy (O'Donnell). As Cooper pointed out, unlike traditional analysis processes, AI engines like Claude need only seconds to process vast amounts of intelligence and identify potential strike targets that would otherwise take hours or days to analyze. Consequently, the pace of modern warfare has accelerated significantly.</p>
+
+  <h2>Question of Ethics</h2>
+
+  <p>With the deployment of AI, ethical questions arise. Although the final decisions on strikes are made by humans, the ethics of artificial intelligence's involvement and its data reliability are debatable. One example that has seriously questioned the ethics of AI was the incident of a school strike that killed more than 175 children. According to The Bulletin, this incident is likely to stem from misinformation that AI processed (Goudarzi, S.).</p>
+
+  <div class="pull-quote">"Is AI in its current form reliable enough to be deployed in a battleground?"</div>
+
+  <p>People often relate the situation to science fiction novels where technology takes over humans and begins making decisions beyond their control. Correspondingly, Anthropic is restricting the Pentagon's use of Claude for certain applications, despite the Army's demand for full access. With the rapid development of technology and the advancement of AI, a clear restriction regarding the usage of AI in warfare seems to be required.</p>
+
+  <h2>Other Technology</h2>
+
+  <p>Alongside the use of AI, the United States used low-cost one-way attack drones for the first time in combat, and Iran has been using its Shahed drones extensively with the similar intent of using these killing drones without exposing air force soldiers to danger. These drones are cost-effective and low-risk because they do not require human resources in order to strike precisely. Because the Russia-Ukraine war has already proved the catastrophic consequences of these killer drones — causing <strong>70–80% of deaths and injuries</strong> throughout the war — their expanded use in the Iran-US conflict raises serious concerns about the normalization of autonomous and semi-autonomous warfare.</p>
+
+  <p>Similarly, according to reports on the Venezuela operation in January 2026, the country's air defense system, internet, power grid, and communication systems were disrupted for 2.5 hours by a coordinated cyberattack. The United States has demonstrated its ability to paralyze a country through advanced technology.</p>
+
+  <p>The ability that these technologies have to conduct warfare is clearly devastating. As combat continues to evolve, whether or not countries define the limitations of technology is a challenge the world faces. From now on, technology will continue to play a significant role in warfare, shaping how humans face the consequences.</p>
+
+  <div class="works-cited">
+    <h2>Works Cited</h2>
+    <ol>
+      <li>Goudarzi, S. (2026, March 12). Unready for war, AI may already be causing deadly mistakes. <em>Bulletin of the Atomic Scientists.</em> <a href="https://thebulletin.org/2026/03/unready-for-war-ai-may-already-be-causing-deadly-mistakes/amp/" target="_blank">thebulletin.org</a></li>
+      <li>O'Donnell, James. "A Defense Official Reveals How AI Chatbots Could Be Used for Targeting Decisions." <em>MIT Technology Review,</em> 13 Mar. 2026. <a href="https://www.technologyreview.com/2026/03/12/1134243/defense-official-military-use-ai-chatbots-targeting-decisions" target="_blank">technologyreview.com</a></li>
+      <li>U.S. Central Command on X. <a href="https://x.com/CENTCOM/status/2031700131687379148" target="_blank">x.com/CENTCOM</a></li>
+    </ol>
+  </div>
+
+</div>
+
+<div class="back-section">
+  <a href="index.html#blog" class="btn">← Back to Blog</a>
+</div>
+
+<footer>
+  <p>© 2025 Jade. All rights reserved.</p>
+  <p>Built with care.</p>
+</footer>
+
+</body>
+</html>
