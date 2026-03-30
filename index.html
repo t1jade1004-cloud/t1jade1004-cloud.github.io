@@ -598,14 +598,14 @@
   <!-- Analytical -->
   <div class="blog-panel" id="tab-analytical">
     <div class="blog-list">
-      <a href="article-technology-warfare.html" class="blog-item">
+      <a href="#" class="blog-item">
         <div>
           <p class="blog-item-label">Analytical</p>
-          <h3 class="blog-item-title">The Role of Technology in Modern Warfare</h3>
-          <p class="blog-item-excerpt">From AI targeting systems to autonomous drones — how advanced technology is reshaping the ethics and pace of modern combat.</p>
+          <h3 class="blog-item-title">Antibiotic Resistance: How Bad Is It, Really?</h3>
+          <p class="blog-item-excerpt">A data-driven look at AMR projections, resistance mechanisms, and what the scientific community is doing about it.</p>
         </div>
         <div>
-          <p class="blog-item-meta">Mar 2026</p>
+          <p class="blog-item-meta">Mar 2025</p>
           <p class="blog-arrow">→</p>
         </div>
       </a>
@@ -640,7 +640,7 @@
   <p class="section-label">Contact</p>
   <h2 class="section-title">Let's connect.</h2>
   <p class="section-subtitle">Whether you're a teacher, collaborator, or just curious — I'd love to hear from you.</p>
-  <a href="/cdn-cgi/l/email-protection#b1dbd0d5d4f1d4dcd0d8dd9fd2dedc" class="btn btn-primary">Say Hello →</a>
+  <a href="mailto:jade@email.com" class="btn btn-primary">Say Hello →</a>
 </section>
 
 <footer>
@@ -648,7 +648,7 @@
   <p>Built with care.</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // Tab switching
   function switchTab(name, btn) {
     document.querySelectorAll('.blog-tab').forEach(t => t.classList.remove('active'));
@@ -659,4 +659,9 @@
 
   // Scroll reveal
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add(
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
