@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Jade — Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -66,15 +66,16 @@
     .project-link { font-weight: 500; text-decoration: none; color: var(--ink); }
     .project-link:hover { color: var(--accent); }
 
-    /* PURE CSS TABS */
-    #blog { background: var(--surface); }
+    /* BLOG TABS — key fix: radio inputs are OUTSIDE and BEFORE everything they control */
     #tab-science-radio, #tab-opinion-radio, #tab-analytical-radio { display: none; }
 
-    .blog-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 3rem; }
+    #blog { background: var(--surface); }
+    .blog-header { padding: 7rem 5vw 0; }
+    .blog-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 3rem; padding: 0 5vw; }
     .blog-tab { padding: 0.7rem 1.4rem; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s; font-family: var(--sans); }
     .blog-tab:hover { color: var(--ink); }
 
-    .blog-panel { display: none; }
+    .blog-panel { display: none; padding: 0 5vw 7rem; }
 
     #tab-science-radio:checked ~ .blog-tabs label[for="tab-science-radio"] { color: var(--accent); border-bottom-color: var(--accent); }
     #tab-opinion-radio:checked ~ .blog-tabs label[for="tab-opinion-radio"] { color: var(--accent); border-bottom-color: var(--accent); }
@@ -185,100 +186,101 @@
 
 <div class="divider"></div>
 
-<section id="blog">
+<!-- BLOG: radio inputs MUST be here, outside and before the tabs and panels -->
+<input type="radio" name="blog-tab" id="tab-science-radio" checked>
+<input type="radio" name="blog-tab" id="tab-opinion-radio">
+<input type="radio" name="blog-tab" id="tab-analytical-radio">
+
+<div class="blog-header" id="blog">
   <p class="section-label">Personal Blog</p>
   <h2 class="section-title">Writing & ideas.</h2>
   <p class="section-subtitle">Essays and articles spanning science explainers, personal opinions, and analytical deep-dives.</p>
+</div>
 
-  <input type="radio" name="blog-tab" id="tab-science-radio" checked>
-  <input type="radio" name="blog-tab" id="tab-opinion-radio">
-  <input type="radio" name="blog-tab" id="tab-analytical-radio">
+<div class="blog-tabs">
+  <label class="blog-tab" for="tab-science-radio">Science</label>
+  <label class="blog-tab" for="tab-opinion-radio">Opinion</label>
+  <label class="blog-tab" for="tab-analytical-radio">Analytical</label>
+</div>
 
-  <div class="blog-tabs">
-    <label class="blog-tab" for="tab-science-radio">Science</label>
-    <label class="blog-tab" for="tab-opinion-radio">Opinion</label>
-    <label class="blog-tab" for="tab-analytical-radio">Analytical</label>
+<div class="blog-panel" id="panel-science">
+  <div class="blog-list">
+    <a href="article-technology-warfare.html" class="blog-item">
+      <div>
+        <p class="blog-item-label">Science</p>
+        <h3 class="blog-item-title">The Role of Technology in Modern Warfare</h3>
+        <p class="blog-item-excerpt">From AI targeting systems to autonomous drones — how advanced technology is reshaping the ethics and pace of modern combat.</p>
+      </div>
+      <div><p class="blog-item-meta">Mar 2026</p><p class="blog-arrow">→</p></div>
+    </a>
+    <a href="#" class="blog-item">
+      <div>
+        <p class="blog-item-label">Science</p>
+        <h3 class="blog-item-title">Why Mitochondria Are More Interesting Than You Think</h3>
+        <p class="blog-item-excerpt">Beyond "the powerhouse of the cell" — how mitochondria regulate apoptosis, aging, and cellular identity.</p>
+      </div>
+      <div><p class="blog-item-meta">Mar 2025</p><p class="blog-arrow">→</p></div>
+    </a>
+    <a href="#" class="blog-item">
+      <div>
+        <p class="blog-item-label">Science</p>
+        <h3 class="blog-item-title">How Vaccines Train the Immune System</h3>
+        <p class="blog-item-excerpt">A clear breakdown of adaptive immunity, memory B cells, and why mRNA vaccines work differently from traditional ones.</p>
+      </div>
+      <div><p class="blog-item-meta">Jan 2025</p><p class="blog-arrow">→</p></div>
+    </a>
+    <a href="#" class="blog-item">
+      <div>
+        <p class="blog-item-label">Science</p>
+        <h3 class="blog-item-title">The Chemistry of Cooking: Maillard Reaction Explained</h3>
+        <p class="blog-item-excerpt">What actually happens at the molecular level when you sear a steak — and why temperature matters so much.</p>
+      </div>
+      <div><p class="blog-item-meta">Nov 2024</p><p class="blog-arrow">→</p></div>
+    </a>
   </div>
+</div>
 
-  <div class="blog-panel" id="panel-science">
-    <div class="blog-list">
-      <a href="article-technology-warfare.html" class="blog-item">
-        <div>
-          <p class="blog-item-label">Science</p>
-          <h3 class="blog-item-title">The Role of Technology in Modern Warfare</h3>
-          <p class="blog-item-excerpt">From AI targeting systems to autonomous drones — how advanced technology is reshaping the ethics and pace of modern combat.</p>
-        </div>
-        <div><p class="blog-item-meta">Mar 2026</p><p class="blog-arrow">→</p></div>
-      </a>
-      <a href="#" class="blog-item">
-        <div>
-          <p class="blog-item-label">Science</p>
-          <h3 class="blog-item-title">Why Mitochondria Are More Interesting Than You Think</h3>
-          <p class="blog-item-excerpt">Beyond "the powerhouse of the cell" — how mitochondria regulate apoptosis, aging, and cellular identity.</p>
-        </div>
-        <div><p class="blog-item-meta">Mar 2025</p><p class="blog-arrow">→</p></div>
-      </a>
-      <a href="#" class="blog-item">
-        <div>
-          <p class="blog-item-label">Science</p>
-          <h3 class="blog-item-title">How Vaccines Train the Immune System</h3>
-          <p class="blog-item-excerpt">A clear breakdown of adaptive immunity, memory B cells, and why mRNA vaccines work differently from traditional ones.</p>
-        </div>
-        <div><p class="blog-item-meta">Jan 2025</p><p class="blog-arrow">→</p></div>
-      </a>
-      <a href="#" class="blog-item">
-        <div>
-          <p class="blog-item-label">Science</p>
-          <h3 class="blog-item-title">The Chemistry of Cooking: Maillard Reaction Explained</h3>
-          <p class="blog-item-excerpt">What actually happens at the molecular level when you sear a steak — and why temperature matters so much.</p>
-        </div>
-        <div><p class="blog-item-meta">Nov 2024</p><p class="blog-arrow">→</p></div>
-      </a>
-    </div>
+<div class="blog-panel" id="panel-opinion">
+  <div class="blog-list">
+    <a href="#" class="blog-item">
+      <div>
+        <p class="blog-item-label">Opinion</p>
+        <h3 class="blog-item-title">We Need to Talk About Science Literacy in Schools</h3>
+        <p class="blog-item-excerpt">Why memorizing facts isn't the same as understanding science — and how education could do better.</p>
+      </div>
+      <div><p class="blog-item-meta">Feb 2025</p><p class="blog-arrow">→</p></div>
+    </a>
+    <a href="#" class="blog-item">
+      <div>
+        <p class="blog-item-label">Opinion</p>
+        <h3 class="blog-item-title">Should Students Be Taught More About Bioethics?</h3>
+        <p class="blog-item-excerpt">As biotechnology accelerates, the gap between what we can do and what we should do grows wider. Schools need to bridge it.</p>
+      </div>
+      <div><p class="blog-item-meta">Dec 2024</p><p class="blog-arrow">→</p></div>
+    </a>
   </div>
+</div>
 
-  <div class="blog-panel" id="panel-opinion">
-    <div class="blog-list">
-      <a href="#" class="blog-item">
-        <div>
-          <p class="blog-item-label">Opinion</p>
-          <h3 class="blog-item-title">We Need to Talk About Science Literacy in Schools</h3>
-          <p class="blog-item-excerpt">Why memorizing facts isn't the same as understanding science — and how education could do better.</p>
-        </div>
-        <div><p class="blog-item-meta">Feb 2025</p><p class="blog-arrow">→</p></div>
-      </a>
-      <a href="#" class="blog-item">
-        <div>
-          <p class="blog-item-label">Opinion</p>
-          <h3 class="blog-item-title">Should Students Be Taught More About Bioethics?</h3>
-          <p class="blog-item-excerpt">As biotechnology accelerates, the gap between what we can do and what we should do grows wider. Schools need to bridge it.</p>
-        </div>
-        <div><p class="blog-item-meta">Dec 2024</p><p class="blog-arrow">→</p></div>
-      </a>
-    </div>
+<div class="blog-panel" id="panel-analytical">
+  <div class="blog-list">
+    <a href="#" class="blog-item">
+      <div>
+        <p class="blog-item-label">Analytical</p>
+        <h3 class="blog-item-title">Analyzing 10 Years of Local Air Quality Data</h3>
+        <p class="blog-item-excerpt">Using open EPA datasets to understand whether air quality in my city has improved — and what's driving the trends.</p>
+      </div>
+      <div><p class="blog-item-meta">Oct 2024</p><p class="blog-arrow">→</p></div>
+    </a>
+    <a href="#" class="blog-item">
+      <div>
+        <p class="blog-item-label">Analytical</p>
+        <h3 class="blog-item-title">What Do Studies on Sleep Deprivation Actually Say?</h3>
+        <p class="blog-item-excerpt">Breaking down the methodology behind key sleep studies and what the evidence genuinely supports for teenagers.</p>
+      </div>
+      <div><p class="blog-item-meta">Sep 2024</p><p class="blog-arrow">→</p></div>
+    </a>
   </div>
-
-  <div class="blog-panel" id="panel-analytical">
-    <div class="blog-list">
-      <a href="#" class="blog-item">
-        <div>
-          <p class="blog-item-label">Analytical</p>
-          <h3 class="blog-item-title">Analyzing 10 Years of Local Air Quality Data</h3>
-          <p class="blog-item-excerpt">Using open EPA datasets to understand whether air quality in my city has improved — and what's driving the trends.</p>
-        </div>
-        <div><p class="blog-item-meta">Oct 2024</p><p class="blog-arrow">→</p></div>
-      </a>
-      <a href="#" class="blog-item">
-        <div>
-          <p class="blog-item-label">Analytical</p>
-          <h3 class="blog-item-title">What Do Studies on Sleep Deprivation Actually Say?</h3>
-          <p class="blog-item-excerpt">Breaking down the methodology behind key sleep studies and what the evidence genuinely supports for teenagers.</p>
-        </div>
-        <div><p class="blog-item-meta">Sep 2024</p><p class="blog-arrow">→</p></div>
-      </a>
-    </div>
-  </div>
-</section>
+</div>
 
 <section id="contact">
   <p class="section-label">Contact</p>
