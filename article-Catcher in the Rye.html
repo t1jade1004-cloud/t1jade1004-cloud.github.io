@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catcher in the Rye Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f5f2;
+      --surface: #ffffff;
+      --ink: #1a1a18;
+      --ink-soft: #6b6b67;
+      --accent: #2d6a4f;
+      --accent-light: #d8f3dc;
+      --border: #e2e0db;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 5vw;
+      background: rgba(247,245,242,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-back {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink-soft);
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--accent); }
+
+    /* HERO */
+    .article-hero {
+      padding: 9rem 5vw 4rem;
+      max-width: 780px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .article-category {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 0.3rem 0.7rem;
+      border-radius: 2px;
+      display: inline-block;
+      margin-bottom: 1.4rem;
+    }
+    .article-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+    }
+    .article-meta {
+      display: flex; gap: 2rem; flex-wrap: wrap;
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+    /* BODY */
+    .article-body {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 3rem 5vw 6rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+    .article-body p {
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+      margin-bottom: 1.4rem;
+      line-height: 1.8;
+    }
+    .article-body h2 {
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      color: var(--ink);
+      margin: 2.8rem 0 1rem;
+      line-height: 1.2;
+    }
+    .article-body strong { color: var(--ink); font-weight: 500; }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      margin: 2.5rem 0;
+      padding: 1.5rem 2rem;
+      border-left: 3px solid var(--accent);
+      background: var(--surface);
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    /* WORKS CITED */
+    .works-cited {
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .works-cited h2 {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .works-cited ol {
+      padding-left: 1.2rem;
+    }
+    .works-cited li {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+    }
+    .works-cited a { color: var(--accent); }
+
+    /* BACK BUTTON */
+    .back-section {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 5vw 5rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.8rem;
+      border-radius: 2px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.22s;
+      background: var(--ink); color: var(--bg);
+    }
+    .btn:hover { background: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 1.5rem 5vw;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p { font-size: 0.78rem; color: #6b6b67; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Hyunchae Jung</a>
+  <a href="index.html#blog" class="nav-back">← Back to Blog</a>
+</nav>
+
+<div class="article-hero">
+  <span class="article-category">Analytical</span>
+  <h1 class="article-title">Catcher in the Rye analysis</h1>
+  <div class="article-meta">
+    <span>By Hyunchae Jung</span>
+    <span>Feberary 2025</span>
+    <span>7 min read</span>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <div class="pull-quote">"What is Holden’s vision of childhood and adulthood? Where does he fit in?"</div>
+
+  <p>Holden is a junior in high school who fails to fit into society and he has different values compared to his peers. His vision of childhood and adulthood differs because of his living situation and past experiences. I believe that Holden assumes childhood as the positive aspect of life and adulthood as the negative aspect of the world. Even though he tries to escape from the social method of becoming an adult that he disagrees with, his plans don’t go well. Unfortunately, he is not yet ready to turn into an adult as he tries to be.</p>
+
+  <p>Halfway through the high school, Holden feels confused and tries to find his way through to adulthood. He has flunked out of various schools including Pency where he was last. Not confident in the social atmosphere of his age, and calling the other students “phonies”  demonstrates that he is both critical and anxious. He wears a red hunting hat symbolizing his independence and confidence when he is alone. Since the red hunting hat is highly visible and not commonly worn in a city, Holden purposely sets himself apart from other people. In this way, he announces that he does not want to be a part of the mainstream. As Holden does not suit his environment, he tries to escape from it in his own way. But on a trip to New York, he experiences disgust and fear toward adulthood. When Holden enters his hotel room, he takes off his hunting hat and drops it on the bed, symbolizing an attempt to be socially “normal” and temporarily altering his self-identification. However, every incident inside the hotel, such as a sexual attempt, a fight with the bellboy, and a conversation with three girls from the club increases his hatred and dread of adulthood. </p>
+
+  <p>Holden has an unconventional personality and his behavior makes people think he’s a little off, which adds to his isolation. In New York, for example, he asks a taxi driver, a bartender, and an old friend about what happens to the ducks in Central Park in winter. He also tells his friend Sally a weird story about how he wants to go away somewhere and live with her, and makes her cry. His personality is one of the significant factors in his maladjustment. Nevertheless, he has two things he loves; Phoebe and Allie, his sister and his brother who died. I believe that Allie’s death led to Holden’s personality and his perspective on society. These two people could represent  “childhood,” the good part of life, in Holden’s eyes. When Holden tells Phoebe that he wants to be a catcher in the rye,  the real thoughts of Holden are clear: children are the only pure good of the community and he is willing to protect them like a catcher in the rye. When Phoebe is playing in the carousel at the zoo, it starts to rain, and other parents have already gotten out of the rain. However, Holden finally feels very comfortable and satisfied with his action of protecting pure Phoebe from the world.</p>
+
+  <p>Through all the challenges that Holden had to go through, he found his way to become a real adult. His thoughts about adulthood and peers are that he feels everything is fake and lousy have never changed, but he has grown to be ready to become an adult. I think becoming an adult from a teenager is not just about age. For Holden, going through the challenges and having a perspective on the community is even more important than his age.</p>
+
+  <p>People often relate the situation to science fiction novels where technology takes over humans and begins making decisions beyond their control. Correspondingly, Anthropic is restricting the Pentagon's use of Claude for certain applications, despite the Army's demand for full access. With the rapid development of technology and the advancement of AI, a clear restriction regarding the usage of AI in warfare seems to be required.</p>
+
+</div>
+
+<div class="back-section">
+  <a href="index.html#blog" class="btn">← Back to Blog</a>
+</div>
+
+<footer>
+  <p>© 2025 Hyunchae Jung All rights reserved.</p>
+  <p>Built with care.</p>
+</footer>
+
+</body>
+</html>
