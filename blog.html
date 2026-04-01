@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog — Jade</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f7f5f2; --surface: #ffffff; --ink: #1a1a18; --ink-soft: #6b6b67;
+      --accent: #2d6a4f; --accent-light: #d8f3dc; --border: #e2e0db;
+      --serif: 'DM Serif Display', Georgia, serif; --sans: 'DM Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 5vw; background: rgba(247,245,242,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--serif); font-size: 1.2rem; color: var(--ink); text-decoration: none; }
+    .nav-back { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--ink-soft); display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+
+    /* HEADER */
+    .blog-header {
+      padding: 9rem 5vw 4rem;
+      max-width: 900px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .blog-header-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem; }
+    .blog-header-title { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; color: var(--ink); margin-bottom: 1rem; }
+    .blog-header-sub { font-size: 1rem; color: var(--ink-soft); max-width: 500px; }
+
+    /* FILTER TABS */
+    .filter-wrap {
+      padding: 0 5vw;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.35s forwards;
+    }
+
+    /* Pure CSS radio tabs */
+    #filter-all, #filter-science, #filter-opinion, #filter-analytical { display: none; }
+
+    .filter-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 0; }
+    .filter-tab { padding: 0.7rem 1.4rem; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s; font-family: var(--sans); }
+    .filter-tab:hover { color: var(--ink); }
+
+    #filter-all:checked ~ .filter-wrap .filter-tabs label[for="filter-all"],
+    #filter-science:checked ~ .filter-wrap .filter-tabs label[for="filter-science"],
+    #filter-opinion:checked ~ .filter-wrap .filter-tabs label[for="filter-opinion"],
+    #filter-analytical:checked ~ .filter-wrap .filter-tabs label[for="filter-analytical"] {
+      color: var(--accent); border-bottom-color: var(--accent);
+    }
+
+    /* TABLE */
+    .table-wrap {
+      padding: 0 5vw 6rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.5s forwards;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { border-bottom: 2px solid var(--ink); }
+    th { padding: 1rem 1.2rem; text-align: left; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
+    th:last-child { text-align: right; }
+
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; cursor: pointer; }
+    tbody tr:hover { background: var(--accent-light); }
+    td { padding: 1.4rem 1.2rem; vertical-align: middle; }
+
+    .td-category span {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+      background: var(--accent-light); padding: 0.25rem 0.65rem;
+      border-radius: 2px; white-space: nowrap;
+    }
+    .td-title { font-family: var(--serif); font-size: 1.1rem; color: var(--ink); line-height: 1.3; }
+    .td-excerpt { font-size: 0.85rem; color: var(--ink-soft); margin-top: 0.25rem; }
+    .td-date { font-size: 0.82rem; color: var(--ink-soft); white-space: nowrap; }
+    .td-link { text-align: right; }
+    .td-link a { font-size: 0.82rem; font-weight: 500; text-decoration: none; color: var(--ink); letter-spacing: 0.04em; white-space: nowrap; }
+    .td-link a:hover { color: var(--accent); }
+
+    /* Show/hide rows by category using CSS */
+    /* All rows visible when "All" selected */
+    #filter-all:checked ~ .table-wrap tr.row-science,
+    #filter-all:checked ~ .table-wrap tr.row-opinion,
+    #filter-all:checked ~ .table-wrap tr.row-analytical { display: table-row; }
+
+    #filter-science:checked ~ .table-wrap tr.row-opinion,
+    #filter-science:checked ~ .table-wrap tr.row-analytical { display: none; }
+    #filter-science:checked ~ .table-wrap tr.row-science { display: table-row; }
+
+    #filter-opinion:checked ~ .table-wrap tr.row-science,
+    #filter-opinion:checked ~ .table-wrap tr.row-analytical { display: none; }
+    #filter-opinion:checked ~ .table-wrap tr.row-opinion { display: table-row; }
+
+    #filter-analytical:checked ~ .table-wrap tr.row-science,
+    #filter-analytical:checked ~ .table-wrap tr.row-opinion { display: none; }
+    #filter-analytical:checked ~ .table-wrap tr.row-analytical { display: table-row; }
+
+    /* FOOTER */
+    footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.08); padding: 1.5rem 5vw; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-size: 0.78rem; color: #6b6b67; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 700px) {
+      .td-excerpt { display: none; }
+      .td-date { display: none; }
+      th.th-date, th.th-excerpt { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Jade.</a>
+  <a href="index.html#blog" class="nav-back">← Back to Portfolio</a>
+</nav>
+
+<!-- Radio inputs MUST be before everything they control -->
+<input type="radio" name="filter" id="filter-all" checked>
+<input type="radio" name="filter" id="filter-science">
+<input type="radio" name="filter" id="filter-opinion">
+<input type="radio" name="filter" id="filter-analytical">
+
+<div class="blog-header">
+  <p class="blog-header-label">Personal Blog</p>
+  <h1 class="blog-header-title">All Articles.</h1>
+  <p class="blog-header-sub">Writing on science, opinions, and analytical deep-dives. Filter by category below.</p>
+</div>
+
+<div class="filter-wrap">
+  <div class="filter-tabs">
+    <label class="filter-tab" for="filter-all">All</label>
+    <label class="filter-tab" for="filter-science">Science</label>
+    <label class="filter-tab" for="filter-opinion">Opinion</label>
+    <label class="filter-tab" for="filter-analytical">Analytical</label>
+  </div>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th style="width:120px;">Category</th>
+        <th>Title & Excerpt</th>
+        <th class="th-date" style="width:100px;">Date</th>
+        <th style="width:80px;"></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- SCIENCE -->
+      <tr class="row-science" onclick="location.href='article-technology-warfare.html'">
+        <td class="td-category"><span>Science</span></td>
+        <td>
+          <div class="td-title">The Role of Technology in Modern Warfare</div>
+          <div class="td-excerpt">From AI targeting systems to autonomous drones — how advanced technology is reshaping the ethics and pace of modern combat.</div>
+        </td>
+        <td class="td-date">Mar 2026</td>
+        <td class="td-link"><a href="article-technology-warfare.html">Read →</a></td>
+      </tr>
+
+      <tr class="row-science" onclick="location.href='#'">
+        <td class="td-category"><span>Science</span></td>
+        <td>
+          <div class="td-title">Why Mitochondria Are More Interesting Than You Think</div>
+          <div class="td-excerpt">Beyond "the powerhouse of the cell" — how mitochondria regulate apoptosis, aging, and cellular identity.</div>
+        </td>
+        <td class="td-date">Mar 2025</td>
+        <td class="td-link"><a href="#">Read →</a></td>
+      </tr>
+
+      <tr class="row-science" onclick="location.href='#'">
+        <td class="td-category"><span>Science</span></td>
+        <td>
+          <div class="td-title">How Vaccines Train the Immune System</div>
+          <div class="td-excerpt">A clear breakdown of adaptive immunity, memory B cells, and why mRNA vaccines work differently from traditional ones.</div>
+        </td>
+        <td class="td-date">Jan 2025</td>
+        <td class="td-link"><a href="#">Read →</a></td>
+      </tr>
+
+      <tr class="row-science" onclick="location.href='#'">
+        <td class="td-category"><span>Science</span></td>
+        <td>
+          <div class="td-title">The Chemistry of Cooking: Maillard Reaction Explained</div>
+          <div class="td-excerpt">What actually happens at the molecular level when you sear a steak — and why temperature matters so much.</div>
+        </td>
+        <td class="td-date">Nov 2024</td>
+        <td class="td-link"><a href="#">Read →</a></td>
+      </tr>
+
+      <!-- OPINION -->
+      <tr class="row-opinion" onclick="location.href='#'">
+        <td class="td-category"><span>Opinion</span></td>
+        <td>
+          <div class="td-title">We Need to Talk About Science Literacy in Schools</div>
+          <div class="td-excerpt">Why memorizing facts isn't the same as understanding science — and how education could do better.</div>
+        </td>
+        <td class="td-date">Feb 2025</td>
+        <td class="td-link"><a href="#">Read →</a></td>
+      </tr>
+
+      <tr class="row-opinion" onclick="location.href='#'">
+        <td class="td-category"><span>Opinion</span></td>
+        <td>
+          <div class="td-title">Should Students Be Taught More About Bioethics?</div>
+          <div class="td-excerpt">As biotechnology accelerates, the gap between what we can do and what we should do grows wider.</div>
+        </td>
+        <td class="td-date">Dec 2024</td>
+        <td class="td-link"><a href="#">Read →</a></td>
+      </tr>
+
+      <!-- ANALYTICAL -->
+      <tr class="row-analytical" onclick="location.href='#'">
+        <td class="td-category"><span>Analytical</span></td>
+        <td>
+          <div class="td-title">Analyzing 10 Years of Local Air Quality Data</div>
+          <div class="td-excerpt">Using open EPA datasets to understand whether air quality in my city has improved — and what's driving the trends.</div>
+        </td>
+        <td class="td-date">Oct 2024</td>
+        <td class="td-link"><a href="#">Read →</a></td>
+      </tr>
+
+      <tr class="row-analytical" onclick="location.href='#'">
+        <td class="td-category"><span>Analytical</span></td>
+        <td>
+          <div class="td-title">What Do Studies on Sleep Deprivation Actually Say?</div>
+          <div class="td-excerpt">Breaking down the methodology behind key sleep studies and what the evidence genuinely supports for teenagers.</div>
+        </td>
+        <td class="td-date">Sep 2024</td>
+        <td class="td-link"><a href="#">Read →</a></td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  <p>© 2025 Jade. All rights reserved.</p>
+  <p>Built with care.</p>
+</footer>
+
+</body>
+</html>
