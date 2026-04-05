@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Of Mice and Men — Jade</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f5f2;
+      --surface: #ffffff;
+      --ink: #1a1a18;
+      --ink-soft: #6b6b67;
+      --accent: #2d6a4f;
+      --accent-light: #d8f3dc;
+      --border: #e2e0db;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 5vw;
+      background: rgba(247,245,242,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-back {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink-soft);
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--accent); }
+
+    /* HERO */
+    .article-hero {
+      padding: 9rem 5vw 4rem;
+      max-width: 780px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .article-category {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 0.3rem 0.7rem;
+      border-radius: 2px;
+      display: inline-block;
+      margin-bottom: 1.4rem;
+    }
+    .article-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+    }
+    .article-meta {
+      display: flex; gap: 2rem; flex-wrap: wrap;
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+    /* BODY */
+    .article-body {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 3rem 5vw 6rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+    .article-body p {
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+      margin-bottom: 1.4rem;
+      line-height: 1.8;
+    }
+    .article-body h2 {
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      color: var(--ink);
+      margin: 2.8rem 0 1rem;
+      line-height: 1.2;
+    }
+    .article-body strong { color: var(--ink); font-weight: 500; }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      margin: 2.5rem 0;
+      padding: 1.5rem 2rem;
+      border-left: 3px solid var(--accent);
+      background: var(--surface);
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    /* WORKS CITED */
+    .works-cited {
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .works-cited h2 {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .works-cited ol {
+      padding-left: 1.2rem;
+    }
+    .works-cited li {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+    }
+    .works-cited a { color: var(--accent); }
+
+    /* BACK BUTTON */
+    .back-section {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 5vw 5rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.8rem;
+      border-radius: 2px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.22s;
+      background: var(--ink); color: var(--bg);
+    }
+    .btn:hover { background: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 1.5rem 5vw;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p { font-size: 0.78rem; color: #6b6b67; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Hyunchae Jung</a>
+  <a href="index.html#blog" class="nav-back">← Back to Blog</a>
+</nav>
+
+<div class="article-hero">
+  <span class="article-category">Analytical</span>
+  <h1 class="article-title">Of Mice and Men Analysis</h1>
+  <div class="article-meta">
+    <span>By Hyunchae Jung</span>
+    <span>March 2025</span>
+    <span>5 min read</span>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <p>“Lord of the Flies” by William Golding symbolically shows the savagery of humans. At first, the kids tried to maintain civilization as they elected Ralph, who represents the civilization, as the group's leader and had a regular assembly using the conch. However, the savagery of the kids, especially the choir group, overtook the civilization, and this was shown as Piggy and Simon were murdered by Jack’s tribe. The officer who came to rescue the boys abruptly stopped the further violence. If the officer hadn’t discovered the fire on the island, Ralph would have been killed, and the boys’ savagery would have escalated until most of the kids were killed.</p>
+
+  <p>Before the officer arrived, the tribe was chasing Ralph to murder him as they did to Simon and Piggy. Without the rescue, he would have been killed, and all the characters that represent civilization and goodness would not exist. If the tribe kills Ralph, the only ones who might question the situation are Sam and Eric, but their fear of Jack would keep them silent. The temporary outcome is that Jack is the new chief and governs all the other kids. As it already appears, there might be a caste system. For example, Roger is explained as the right hand of Jack. Therefore, he will have more power and authority than the other kids. The littluns, who represent the citizens, and Sameneric, who were on Ralph’s side all the time, would have been the lowest class of the society. The kids would go hunting every day, and they might feel satisfied for the moment under the rule of Jack. Meanwhile, the fear of the beast, which does not exist, grows, and I think this would be a notable element. </p>
+
+  <p>FIn the long term of the story, there must be a traitor who has hatred toward Jack. This might be any of the littluns who want to be rescued and go home, and it might be Sameneric or maybe Roger. Roger is shown to be even more cruel than Jack. He threw rocks at Henry, killed Piggy, and tortured Sameneric. He is the type of guy who can do anything to earn what he wants. My point is if Roger is more savage and craves power more than Jack, why wouldn’t he betray Jack to be the leader? I think the betrayal of Roger would have represented the savagery in the society of savagery, which directly relates to the theme of the book. When we think of historical politicians who dreamed of or had dictatorships, such as Adolf Hitler or Julius Caesar, there always has been a traitor like Stauffenberg, who tried to murder Hitler even though he was trusted by Hitler, and the dictator collapsed after all. If Roger made a coup d’etat with some of the other guys in the tribe who also loathed Jack, nobody would help Jack in the fight. Ultimately, the boys would not die from hunger, but from their savagery. </p>
+
+  <p>Without the officer’s arrival, the boys' savagery would have escalated, leading to Ralph’s death and Jack’s total control. Over time, their violence would turn against each other, with betrayal and power struggles, likely ending with Roger taking over. Golding shows that without rules, people can be destroyed easily. In the end, the beast is not only a creature, but it is the darkness inside humans. </p>
+
+  </div>
+
+</div>
+
+<div class="back-section">
+  <a href="index.html#blog" class="btn">← Back to Blog</a>
+</div>
+
+<footer>
+  <p>© 2025 Hyunchae Jung All rights reserved.</p>
+  <p>Built with care.</p>
+</footer>
+
+</body>
+</html>
