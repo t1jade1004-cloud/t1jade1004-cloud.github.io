@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To Kill a Mockingbird — Jade</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f7f5f2; --surface: #ffffff; --ink: #1a1a18; --ink-soft: #6b6b67;
+      --accent: #2d6a4f; --accent-light: #d8f3dc; --border: #e2e0db;
+      --serif: 'DM Serif Display', Georgia, serif; --sans: 'DM Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 5vw; background: rgba(247,245,242,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--serif); font-size: 1.2rem; color: var(--ink); text-decoration: none; }
+    .nav-back { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--ink-soft); display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+
+    /* ================================
+       ARTICLE HEADER
+       ================================ */
+
+    .article-hero {
+      /* Wraps the entire top section: category tag, title, meta */
+      padding: 9rem 5vw 4rem;
+      max-width: 780px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .article-category {
+      /* Green pill tag — change text to: Science / Opinion / Analytical */
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--accent); background: var(--accent-light);
+      padding: 0.3rem 0.7rem; border-radius: 2px; display: inline-block; margin-bottom: 1.4rem;
+    }
+
+    .article-title {
+      /* Main headline of the article */
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      line-height: 1.1; color: var(--ink); margin-bottom: 1.2rem;
+    }
+
+    .article-meta {
+      /* Row showing author, date, read time */
+      display: flex; gap: 2rem; flex-wrap: wrap;
+      font-size: 0.82rem; color: var(--ink-soft);
+      padding-bottom: 2rem; border-bottom: 1px solid var(--border);
+    }
+
+    /* ================================
+       ARTICLE BODY
+       ================================ */
+
+    .article-body {
+      /* Main content wrapper — all text goes inside here */
+      max-width: 680px; margin: 0 auto;
+      padding: 3rem 5vw 2rem;
+      opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    .article-body p {
+      /* Standard paragraph */
+      font-size: 1.05rem; color: var(--ink-soft);
+      margin-bottom: 1.4rem; line-height: 1.8;
+    }
+
+    .article-body h2 {
+      /* Section heading inside the article */
+      font-family: var(--serif); font-size: 1.7rem;
+      color: var(--ink); margin: 2.8rem 0 1rem; line-height: 1.2;
+    }
+
+    .article-body h3 {
+      /* Sub-section heading */
+      font-family: var(--sans); font-size: 1rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--ink); margin: 2rem 0 0.6rem;
+    }
+
+    .article-body strong {
+      /* Bold inline text */
+      color: var(--ink); font-weight: 500;
+    }
+
+    .article-body em {
+      /* Italic inline text */
+      font-style: italic;
+    }
+
+    .article-body a {
+      /* Inline hyperlink */
+      color: var(--accent); text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .article-body ul, .article-body ol {
+      /* Bullet or numbered list */
+      padding-left: 1.5rem; margin-bottom: 1.4rem; color: var(--ink-soft);
+    }
+
+    .article-body li {
+      /* Individual list item */
+      font-size: 1.05rem; line-height: 1.8; margin-bottom: 0.4rem;
+    }
+
+    /* ================================
+       SPECIAL CONTENT BLOCKS
+       ================================ */
+
+    .pull-quote {
+      /* Large standout quote — use for key sentences you want to highlight */
+      margin: 2.5rem 0; padding: 1.5rem 2rem;
+      border-left: 3px solid var(--accent); background: var(--surface);
+      font-family: var(--serif); font-size: 1.2rem;
+      font-style: italic; color: var(--ink); line-height: 1.5;
+    }
+
+    .callout {
+      /* Info box — use for definitions, key facts, or summaries */
+      margin: 2.5rem 0; padding: 1.5rem 2rem;
+      background: var(--accent-light); border-radius: 2px;
+      font-size: 0.95rem; color: var(--ink);
+    }
+    .callout strong {
+      /* Label at the top of the callout, e.g. "Key Fact:" */
+      display: block; margin-bottom: 0.4rem;
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);
+    }
+
+    .image-block {
+      /* Wrapper for an image inside the article */
+      margin: 2.5rem 0;
+    }
+    .image-block img {
+      /* The image itself — always use width:100% */
+      width: 100%; border-radius: 2px; display: block;
+    }
+    .image-caption {
+      /* Small text below an image */
+      font-size: 0.78rem; color: var(--ink-soft);
+      margin-top: 0.6rem; text-align: center; font-style: italic;
+    }
+
+    .data-table {
+      /* Table for data or comparisons inside the article */
+      width: 100%; border-collapse: collapse; margin: 2.5rem 0;
+      font-size: 0.9rem;
+    }
+    .data-table th {
+      background: var(--ink); color: var(--bg);
+      padding: 0.75rem 1rem; text-align: left;
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .data-table td {
+      padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink-soft);
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: var(--accent-light); }
+
+    .divider-line {
+      /* Thin horizontal line to separate sections */
+      width: 100%; height: 1px; background: var(--border); margin: 2.5rem 0;
+    }
+
+    /* ================================
+       WORKS CITED
+       ================================ */
+
+    .works-cited {
+      /* Container for the works cited section */
+      margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border);
+    }
+    .works-cited h2 {
+      font-family: var(--serif); font-size: 1.4rem; color: var(--ink); margin-bottom: 1rem;
+    }
+    .works-cited ol { padding-left: 1.2rem; }
+    .works-cited li {
+      font-size: 0.88rem; color: var(--ink-soft); margin-bottom: 0.8rem; line-height: 1.6;
+    }
+    .works-cited a { color: var(--accent); }
+
+    /* ================================
+       BACK BUTTON + FOOTER
+       ================================ */
+
+    .back-section { max-width: 680px; margin: 0 auto; padding: 2rem 5vw 5rem; }
+    .btn { display: inline-block; padding: 0.75rem 1.8rem; border-radius: 2px; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: all 0.22s; background: var(--ink); color: var(--bg); }
+    .btn:hover { background: var(--accent); }
+
+    footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.08); padding: 1.5rem 5vw; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-size: 0.78rem; color: #6b6b67; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 700px) {
+      .article-meta { gap: 1rem; }
+      .data-table { font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav>
+  <a href="index.html" class="nav-logo">Hyunchae Jung</a>
+  <a href="blog.html" class="nav-back">← Back to Blog</a>
+</nav>
+
+
+<!-- ========== HEADER ========== -->
+<div class="article-hero">
+
+  <!-- STEP 1: Change category to Science / Opinion / Analytical -->
+  <span class="article-category">Analytical</span>
+
+  <!-- STEP 2: Replace with your article title -->
+  <h1 class="article-title">Interpretation of the Title “To Kill A Mockingbird”</h1>
+
+  <!-- STEP 3: Update author, date, and read time -->
+  <div class="article-meta">
+    <span>By Hyunchae Jung</span>
+    <span>April 2025</span>
+    <span>7 min read</span>
+  </div>
+
+</div>
+
+<div class="article-body">
+
+  <p> What does it mean “to kill a mockingbird”? To Kill a Mockingbird is a Southern Gothic Novel by Harper Lee that deals with morality, innocence, and racism in a time that was full of prejudice and discrimination. The phrase “to kill a mockingbird” can be understood to mean “to kill an innocent,” and the characters Tom Robinson and Boo Radly represent how prejudice and discrimination can lead to harm and even the death of innocent people.</p>
+
+  <p> The symbolism of mockingbird first appears in chapter nine. Atticus Finch gives an air rifle to Jem and Scout as their Christmas present and advises them that they are not allowed to kill mockingbirds. A bit later, Miss Maudie explains why: “Mockingbirds don’t do one thing but . . . sing their hearts out for us. That’s why it’s a sin to kill a mockingbird.” With these references to mockingbirds, Harper Lee conveys the meaning of the title: Mockingbirds are innocent, and it is morally wrong to kill them. This theme of innocence and morality is demonstrated in the trial of Tom Robinson. Despite the obvious lies of Mayella and strong evidence that indicates her father is the real culprit, many assume Tom is guilty because of his race. In this case, Tom is portrayed as the “mockingbird” since he is innocent but found guilty. This discrimination against him led to his death while trying to escape from the prison, leaving his family without a father and a husband. The consequences of the prejudice and discrimination solely based on his race are tragic, and Scout comes to the painful realization that it is unfair to judge someone based on what others say about them. </p>
+
+  <p>Another symbolic mockingbird is Boo Radly, Scout’s mysterious neighbor. At the beginning of the story, Scout, Jem, and Dill try to get Boo to come out of his house by doing pranks, all the while thinking Boo is strange and scary. They judged Boo as different from others based on what others say about him, not who he actually is. However, this view changed over time, when they started to find small gifts he left them in the tree. When Bob Ewell attacks Jem and Scout after he was humiliated at the trial,  Boo quietly steps out of the shadows and saves them. As a result of this incident, Scout, who had a limited perspective, matures and learns not to judge people too quickly. Her matured attitude toward Boo Radly is depicted when she holds his hand with respect when she invites him to visit Jem who was wounded in the attack. Due to the prejudices of others, Boo Radly, who was considered strange and even dangerous, had to experience torment that he didn’t deserve, and he can be considered as another mockingbird.</p>
+
+  <p>By choosing Scout as the narrator of the book and showing how two mockingbirds influenced her to change, Lee wants the readers to change too. The history of discrimination in America demonstrates the importance of understanding the lessons of Harper Lee, both now and in the future. Tom Robinson and Boo Radley were both misunderstood and mistreated for being different. Harper Lee’s title asks us to protect those who can’t protect themselves and to always choose compassion over judgment.</p>
+  
+  </div>
+
+</div>
+
+<div class="back-section">
+  <a href="blog.html" class="btn">← Back to Blog</a>
+</div>
+
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <p>© 2025 Hyunchae Jung All rights reserved.</p>
+  <p>Built with care.</p>
+</footer>
+
+</body>
+</html>
