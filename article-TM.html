@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Metamorphosis Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f5f2;
+      --surface: #ffffff;
+      --ink: #1a1a18;
+      --ink-soft: #6b6b67;
+      --accent: #2d6a4f;
+      --accent-light: #d8f3dc;
+      --border: #e2e0db;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 5vw;
+      background: rgba(247,245,242,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-back {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink-soft);
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--accent); }
+
+    /* HERO */
+    .article-hero {
+      padding: 9rem 5vw 4rem;
+      max-width: 780px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .article-category {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 0.3rem 0.7rem;
+      border-radius: 2px;
+      display: inline-block;
+      margin-bottom: 1.4rem;
+    }
+    .article-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+    }
+    .article-meta {
+      display: flex; gap: 2rem; flex-wrap: wrap;
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+    /* BODY */
+    .article-body {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 3rem 5vw 6rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+    .article-body p {
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+      margin-bottom: 1.4rem;
+      line-height: 1.8;
+    }
+    .article-body h2 {
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      color: var(--ink);
+      margin: 2.8rem 0 1rem;
+      line-height: 1.2;
+    }
+    .article-body strong { color: var(--ink); font-weight: 500; }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      margin: 2.5rem 0;
+      padding: 1.5rem 2rem;
+      border-left: 3px solid var(--accent);
+      background: var(--surface);
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    /* WORKS CITED */
+    .works-cited {
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .works-cited h2 {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .works-cited ol {
+      padding-left: 1.2rem;
+    }
+    .works-cited li {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+    }
+    .works-cited a { color: var(--accent); }
+
+    /* BACK BUTTON */
+    .back-section {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 5vw 5rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.8rem;
+      border-radius: 2px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.22s;
+      background: var(--ink); color: var(--bg);
+    }
+    .btn:hover { background: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 1.5rem 5vw;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p { font-size: 0.78rem; color: #6b6b67; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Hyunchae Jung</a>
+  <a href="index.html#blog" class="nav-back">← Back to Blog</a>
+</nav>
+
+<div class="article-hero">
+  <span class="article-category">Analytical</span>
+  <h1 class="article-title">The Metamorphosis analysis</h1>
+  <div class="article-meta">
+    <span>By Hyunchae Jung</span>
+    <span>Jul 2025</span>
+    <span>8 min read</span>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <div class="pull-quote">"The Case of Gregor Samsa’s Wrongful Death"</div>
+
+  <p>In the case before this court, the Samsa family stands accused of causing the wrongful death of their son, Gregor Samsa. After the horrifying transformation of Mr.Samsa into a monstrous verminous bug, he was confined to his room, rejected by his own family, and ultimately died isolated. Both the prosecution and the defense have provided emotional and conflicting testimonies. The prosecution claims the Samsas were responsible for Gregor’s death through neglect and cruelty. In contrast, the defense argues that the family was overwhelmed and traumatized and did what they could under extreme circumstances. After considering the arguments and evidence, this court must determine whether the Samsas are legally and morally responsible for Gregor’s death; hence, I find the Samsa family not guilty of causing the wrongful death of Gregor Samsa.</p>
+
+  <p>The Prosecution argues that the neglect and emotional abuse led to the tragic death of Gregor Samsa. From the moment of transformation, they treated him not as a son in need, but as a disgusting burden without any need. The family potentially reveals that the position of Gregor Samsa in this family was just a money-making machine. His sister Grete, once his biggest supporter and loving sister, stopped caring for him and insisted on getting rid of him. His father physically assaulted him by throwing apples, which became lodged in Gregor’s back and caused a wound that never healed. The family failed to show even basic compassion. They treated him as a thing rather than as a family member, which cannot be justified under any circumstance. Through this dehumanization, they violated his basic human right to life, especially as the transformation was just applied to his appearance. Rather than trying to understand or comfort Gregor in his suffering, they isolated and rejected him with the intention of causing him to give up his life entirely. As a whole, the prosecution asserts that the Samsas’ cruelty and abandonment led to his death, leading to an accusation of second-degree murder for Mr.Samsa, Mrs.Samsa, and Ms.Samsa, based on their Intent, Deliberation, and Malice Aforethought. </p>
+
+  <p>The defense contends that the Samsa family can’t be held responsible for Gregor Samsa’s death because they were also the victims of this terrible situation. The sudden transformation placed the family under emotional and psychological stress. No parents or siblings are reasonably expected to respond appropriately and calmly in such an unprecedented circumstance. The miserable family didn’t have any professional help, guidance, or a clear way to cure their son in his monstrous form. Although their response could seem cold, they were caught up in fear, confusion, and hopelessness. Furthermore, the economic and emotional strain must be considered. Due to the unexpected change, the only income of the family was gone. His father, mother, and sister all had to take on demanding jobs to survive, leaving them extremely emotionally drained. The defense argues that the lack of attention to Gregor Samsa was not out of cruelty but as a result of the instinct to survive. His sister, Grete, tried to care for him in the beginning, bringing him food and cleaning his room, but over time, the burden became too much for a teenage girl who was also working and studying. Most importantly, the defense emphasizes that any direct action from the family did not cause the death of Gregor Samsa. They admitted the apple thrown by his father did serious damage, but Gregor chose to stop eating and slipped away quietly in the night, possibly out of guilt, sorrow, or even a desire to relieve his family of the burden he believed himself to be at the end. The Samas were not killers; they were just ordinary people trying to survive in their tragic state of affairs.</p>
+
+  <p>	After careful consideration of the evidence and both closing statements, this court finds the Samsas not guilty of causing the wrongful death of Gregor Samsa. While the family’s actions were at times cold and painful to witness, they do not amount to criminal neglect or intentional harm. Gregor’s transformation was clearly inexplicable, hence it is unjustified to hold him responsible. It is obvious that the Samsas, especially Grete, made early efforts to care for Gregor. As time passed and the burden to keep the household going became graver and bigger, their ability to care for him diminished, and this is not out of hatred, but from exhaustion. In the end, his death was a result of his own despair, his physical deterioration, and the tragic alienation caused by his condition, not necessarily from any deliberate act by his family. Therefore, they are acquitted of all charges related to Gregor Samsa’s death. </p>
+  
+</div>
+
+<div class="back-section">
+  <a href="index.html#blog" class="btn">← Back to Blog</a>
+</div>
+
+<footer>
+  <p>© 2025 Hyunchae Jung All rights reserved.</p>
+  <p>Built with care.</p>
+</footer>
+
+</body>
+</html>
