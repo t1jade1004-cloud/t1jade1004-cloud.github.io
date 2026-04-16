@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Article Title — Jade</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f7f5f2; --surface: #ffffff; --ink: #1a1a18; --ink-soft: #6b6b67;
+      --accent: #2d6a4f; --accent-light: #d8f3dc; --border: #e2e0db;
+      --serif: 'DM Serif Display', Georgia, serif; --sans: 'DM Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 5vw; background: rgba(247,245,242,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--serif); font-size: 1.2rem; color: var(--ink); text-decoration: none; }
+    .nav-back { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--ink-soft); display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+
+    /* ================================
+       ARTICLE HEADER
+       ================================ */
+
+    .article-hero {
+      /* Wraps the entire top section: category tag, title, meta */
+      padding: 9rem 5vw 4rem;
+      max-width: 780px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .article-category {
+      /* Green pill tag — change text to: Science / Opinion / Analytical */
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--accent); background: var(--accent-light);
+      padding: 0.3rem 0.7rem; border-radius: 2px; display: inline-block; margin-bottom: 1.4rem;
+    }
+
+    .article-title {
+      /* Main headline of the article */
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      line-height: 1.1; color: var(--ink); margin-bottom: 1.2rem;
+    }
+
+    .article-meta {
+      /* Row showing author, date, read time */
+      display: flex; gap: 2rem; flex-wrap: wrap;
+      font-size: 0.82rem; color: var(--ink-soft);
+      padding-bottom: 2rem; border-bottom: 1px solid var(--border);
+    }
+
+    /* ================================
+       ARTICLE BODY
+       ================================ */
+
+    .article-body {
+      /* Main content wrapper — all text goes inside here */
+      max-width: 680px; margin: 0 auto;
+      padding: 3rem 5vw 2rem;
+      opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    .article-body p {
+      /* Standard paragraph */
+      font-size: 1.05rem; color: var(--ink-soft);
+      margin-bottom: 1.4rem; line-height: 1.8;
+    }
+
+    .article-body h2 {
+      /* Section heading inside the article */
+      font-family: var(--serif); font-size: 1.7rem;
+      color: var(--ink); margin: 2.8rem 0 1rem; line-height: 1.2;
+    }
+
+    .article-body h3 {
+      /* Sub-section heading */
+      font-family: var(--sans); font-size: 1rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--ink); margin: 2rem 0 0.6rem;
+    }
+
+    .article-body strong {
+      /* Bold inline text */
+      color: var(--ink); font-weight: 500;
+    }
+
+    .article-body em {
+      /* Italic inline text */
+      font-style: italic;
+    }
+
+    .article-body a {
+      /* Inline hyperlink */
+      color: var(--accent); text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .article-body ul, .article-body ol {
+      /* Bullet or numbered list */
+      padding-left: 1.5rem; margin-bottom: 1.4rem; color: var(--ink-soft);
+    }
+
+    .article-body li {
+      /* Individual list item */
+      font-size: 1.05rem; line-height: 1.8; margin-bottom: 0.4rem;
+    }
+
+    /* ================================
+       SPECIAL CONTENT BLOCKS
+       ================================ */
+
+    .pull-quote {
+      /* Large standout quote — use for key sentences you want to highlight */
+      margin: 2.5rem 0; padding: 1.5rem 2rem;
+      border-left: 3px solid var(--accent); background: var(--surface);
+      font-family: var(--serif); font-size: 1.2rem;
+      font-style: italic; color: var(--ink); line-height: 1.5;
+    }
+
+    .callout {
+      /* Info box — use for definitions, key facts, or summaries */
+      margin: 2.5rem 0; padding: 1.5rem 2rem;
+      background: var(--accent-light); border-radius: 2px;
+      font-size: 0.95rem; color: var(--ink);
+    }
+    .callout strong {
+      /* Label at the top of the callout, e.g. "Key Fact:" */
+      display: block; margin-bottom: 0.4rem;
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);
+    }
+
+    .image-block {
+      /* Wrapper for an image inside the article */
+      margin: 2.5rem 0;
+    }
+    .image-block img {
+      /* The image itself — always use width:100% */
+      width: 100%; border-radius: 2px; display: block;
+    }
+    .image-caption {
+      /* Small text below an image */
+      font-size: 0.78rem; color: var(--ink-soft);
+      margin-top: 0.6rem; text-align: center; font-style: italic;
+    }
+
+    .data-table {
+      /* Table for data or comparisons inside the article */
+      width: 100%; border-collapse: collapse; margin: 2.5rem 0;
+      font-size: 0.9rem;
+    }
+    .data-table th {
+      background: var(--ink); color: var(--bg);
+      padding: 0.75rem 1rem; text-align: left;
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .data-table td {
+      padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink-soft);
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: var(--accent-light); }
+
+    .divider-line {
+      /* Thin horizontal line to separate sections */
+      width: 100%; height: 1px; background: var(--border); margin: 2.5rem 0;
+    }
+
+    /* ================================
+       WORKS CITED
+       ================================ */
+
+    .works-cited {
+      /* Container for the works cited section */
+      margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border);
+    }
+    .works-cited h2 {
+      font-family: var(--serif); font-size: 1.4rem; color: var(--ink); margin-bottom: 1rem;
+    }
+    .works-cited ol { padding-left: 1.2rem; }
+    .works-cited li {
+      font-size: 0.88rem; color: var(--ink-soft); margin-bottom: 0.8rem; line-height: 1.6;
+    }
+    .works-cited a { color: var(--accent); }
+
+    /* ================================
+       BACK BUTTON + FOOTER
+       ================================ */
+
+    .back-section { max-width: 680px; margin: 0 auto; padding: 2rem 5vw 5rem; }
+    .btn { display: inline-block; padding: 0.75rem 1.8rem; border-radius: 2px; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: all 0.22s; background: var(--ink); color: var(--bg); }
+    .btn:hover { background: var(--accent); }
+
+    footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.08); padding: 1.5rem 5vw; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-size: 0.78rem; color: #6b6b67; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 700px) {
+      .article-meta { gap: 1rem; }
+      .data-table { font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav>
+  <a href="index.html" class="nav-logo">Jade.</a>
+  <a href="blog.html" class="nav-back">← Back to Blog</a>
+</nav>
+
+
+<!-- ========== HEADER ========== -->
+<div class="article-hero">
+
+  <!-- STEP 1: Change category to Science / Opinion / Analytical -->
+  <span class="article-category">Science</span>
+
+  <!-- STEP 2: Replace with your article title -->
+  <h1 class="article-title">Your Article Title Goes Here</h1>
+
+  <!-- STEP 3: Update author, date, and read time -->
+  <div class="article-meta">
+    <span>By Hyunchae Jung</span>
+    <span>April 2026</span>
+    <span>4 min read</span>
+  </div>
+
+</div>
+
+
+<!-- ========== BODY ========== -->
+<div class="article-body">
+
+  <!-- STANDARD PARAGRAPH -->
+  <p>This is a standard paragraph. Write your introduction here. Keep it engaging — this is the first thing readers see after the title. Aim for 3–5 sentences that set up what the article is about.</p>
+
+  <!-- SECTION HEADING -->
+  <h2>First Section Heading</h2>
+
+  <p>This paragraph follows a section heading. Use <strong>bold text</strong> to emphasize key terms or important facts. Use <em>italics</em> for titles of books, studies, or for emphasis. You can also add <a href="#">hyperlinks like this</a> to cite sources inline.</p>
+
+  <!-- PULL QUOTE — great for highlighting a key sentence -->
+  <div class="pull-quote">
+    "Paste a powerful sentence from your article here — something you want readers to remember."
+  </div>
+
+  <p>Continue your argument or explanation after the pull quote. This is a good place to expand on the idea you just highlighted.</p>
+
+  <!-- CALLOUT BOX — great for definitions or key facts -->
+  <div class="callout">
+    <strong>Key Fact</strong>
+    Use this box to highlight a definition, statistic, or background fact that readers need to know. Example: "Catalase is an enzyme found in nearly all living organisms that breaks down hydrogen peroxide into water and oxygen."
+  </div>
+
+  <!-- SECTION HEADING -->
+  <h2>Second Section Heading</h2>
+
+  <p>Start your next section here. You can use as many section headings as you need to organize your article.</p>
+
+  <!-- SUB-SECTION HEADING — smaller than h2 -->
+  <h3>A Sub-point Within This Section</h3>
+
+  <p>Use h3 headings for smaller sub-points within a section. Great for breaking down a complex argument into parts.</p>
+
+  <!-- BULLET LIST -->
+  <ul>
+    <li>First point in your list</li>
+    <li>Second point — keep each item concise</li>
+    <li>Third point</li>
+  </ul>
+
+  <!-- NUMBERED LIST -->
+  <ol>
+    <li>Step one</li>
+    <li>Step two</li>
+    <li>Step three</li>
+  </ol>
+
+  <!-- IMAGE BLOCK — upload your image to GitHub and update the src -->
+  <div class="image-block">
+    <img src="your-image-filename.jpg" alt="Describe the image here for accessibility" />
+    <p class="image-caption">Caption: Describe what the image shows and its source.</p>
+  </div>
+
+  <!-- DIVIDER LINE — use to separate major parts of the article -->
+  <div class="divider-line"></div>
+
+  <!-- DATA TABLE — use for comparisons, data, or structured info -->
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Column 1</th>
+        <th>Column 2</th>
+        <th>Column 3</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Row 1, Cell 1</td>
+        <td>Row 1, Cell 2</td>
+        <td>Row 1, Cell 3</td>
+      </tr>
+      <tr>
+        <td>Row 2, Cell 1</td>
+        <td>Row 2, Cell 2</td>
+        <td>Row 2, Cell 3</td>
+      </tr>
+      <tr>
+        <td>Row 3, Cell 1</td>
+        <td>Row 3, Cell 2</td>
+        <td>Row 3, Cell 3</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION HEADING -->
+  <h2>Conclusion</h2>
+
+  <p>Wrap up your article here. Restate your main argument and leave the reader with something to think about. A strong conclusion is just as important as a strong introduction.</p>
+
+
+  <!-- ========== WORKS CITED ========== -->
+  <div class="works-cited">
+    <h2>Works Cited</h2>
+    <ol>
+      <li>Last, First. "Article Title." <em>Publication Name</em>, Date. <a href="#">link</a></li>
+      <li>Last, First. "Article Title." <em>Publication Name</em>, Date. <a href="#">link</a></li>
+      <li>Last, First. "Article Title." <em>Publication Name</em>, Date. <a href="#">link</a></li>
+    </ol>
+  </div>
+
+</div>
+
+
+<!-- ========== BACK BUTTON ========== -->
+<div class="back-section">
+  <a href="blog.html" class="btn">← Back to Blog</a>
+</div>
+
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <p>© 2025 Jade. All rights reserved.</p>
+  <p>Built with care.</p>
+</footer>
+
+</body>
+</html>
